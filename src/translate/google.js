@@ -1,119 +1,116 @@
-var querystring = require('querystring');
+const qs = require('querystring');
+const got = require('got');
+const safeEval = require('safe-eval');
+const googleToken = require('google-translate-token');
+const languages = require('../utils/languages.js');
+const config = require('../config/index.js');
 
-var got = require('got');
-var safeEval = require('safe-eval');
-var token = require('google-translate-token');
+// 获取请求url
+async function getRequestUrl(text, opts) {
+    let token = await googleToken.get(text);
+    const data = {
+        client: 'gtx',
+        sl: opts.from,
+        tl: opts.to,
+        hl: opts.to,
+        dt: ['at', 'bd', 'ex', 'ld', 'md', 'qca', 'rw', 'rm', 'ss', 't'],
+        ie: 'UTF-8',
+        oe: 'UTF-8',
+        otf: 1,
+        ssel: 0,
+        tsel: 0,
+        kc: 7,
+        q: text
+    };
+    data[token.name] = token.value;
+    const requestUrl = `${config.googleBaseUrl}?${qs.stringify(data)}`;
+    return requestUrl;
+}
 
-var languages = require('./languages');
+//处理返回的body
+async function handleBody(url, opts) {
+    console.log('url', url);
+    const result = await got(url);
+    let resultObj = {
+        text: '',
+        from: {
+            language: {
+                didYouMean: false,
+                iso: ''
+            },
+            text: {
+                autoCorrected: false,
+                value: '',
+                didYouMean: false
+            }
+        },
+        raw: ''
+    };
 
-function translate(text, opts) {
-    opts = opts || {};
-    var e;
-    [opts.from, opts.to].forEach(function(lang) {
-        if (lang && !languages.isSupported(lang)) {
-            e = new Error();
-            e.code = 400;
-            e.message = 'The language \'' + lang + '\' is not supported';
+    if (opts.raw) {
+        resultObj.raw = result.body;
+    }
+    const body = safeEval(result.body);
+
+    // console.log('body', body);
+    body[0].forEach(function(obj) {
+        if (obj[0]) {
+            resultObj.text += obj[0];
         }
     });
-    if (e) {
-        return new Promise(function(resolve, reject) {
-            reject(e);
-        });
+
+    if (body[2] === body[8][0][0]) {
+        resultObj.from.language.iso = body[2];
+    } else {
+        resultObj.from.language.didYouMean = true;
+        resultObj.from.language.iso = body[8][0][0];
     }
 
+    if (body[7] && body[7][0]) {
+        let str = body[7][0];
+
+        str = str.replace(/<b><i>/g, '[');
+        str = str.replace(/<\/i><\/b>/g, ']');
+
+        resultObj.from.text.value = str;
+
+        if (body[7][5] === true) {
+            resultObj.from.text.autoCorrected = true;
+        } else {
+            resultObj.from.text.didYouMean = true;
+        }
+    }
+    return resultObj;
+}
+
+//翻译
+async function translate(text, opts) {
+    opts = opts || {};
     opts.from = opts.from || 'auto';
     opts.to = opts.to || 'en';
 
     opts.from = languages.getCode(opts.from);
     opts.to = languages.getCode(opts.to);
-    return token.get(text).then(function(token) {
-        var url = 'https://translate.google.cn/translate_a/single';
-        var data = {
-            client: 'gtx',
-            sl: opts.from,
-            tl: opts.to,
-            hl: opts.to,
-            dt: ['at', 'bd', 'ex', 'ld', 'md', 'qca', 'rw', 'rm', 'ss', 't'],
-            ie: 'UTF-8',
-            oe: 'UTF-8',
-            otf: 1,
-            ssel: 0,
-            tsel: 0,
-            kc: 7,
-            q: text
-        };
-        data[token.name] = token.value;
 
-        return url + '?' + querystring.stringify(data);
-    }).then(function(url) {
-        return got(url).then(function(res) {
-            var result = {
-                text: '',
-                from: {
-                    language: {
-                        didYouMean: false,
-                        iso: ''
-                    },
-                    text: {
-                        autoCorrected: false,
-                        value: '',
-                        didYouMean: false
-                    }
-                },
-                raw: ''
-            };
-
-            if (opts.raw) {
-                result.raw = res.body;
-            }
-
-            var body = safeEval(res.body);
-            body[0].forEach(function(obj) {
-                if (obj[0]) {
-                    result.text += obj[0];
-                }
-            });
-
-            if (body[2] === body[8][0][0]) {
-                result.from.language.iso = body[2];
-            } else {
-                result.from.language.didYouMean = true;
-                result.from.language.iso = body[8][0][0];
-            }
-
-            if (body[7] && body[7][0]) {
-                var str = body[7][0];
-
-                str = str.replace(/<b><i>/g, '[');
-                str = str.replace(/<\/i><\/b>/g, ']');
-
-                result.from.text.value = str;
-
-                if (body[7][5] === true) {
-                    result.from.text.autoCorrected = true;
-                } else {
-                    result.from.text.didYouMean = true;
-                }
-            }
-            return result;
-        }).catch(function(err) {
-            var e;
-            e = new Error();
-            if (err.statusCode !== undefined && err.statusCode !== 200) {
-                e.code = 'BAD_REQUEST';
-            } else {
-                e.code = 'BAD_NETWORK';
-            }
-            throw e;
-        });
-    });
+    try {
+        const requestUrl = await getRequestUrl(text, opts);
+        const result = await handleBody(requestUrl, opts);
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-const outPut = (originText, ops = {}) => new Promise(res => {
-    const { from, to } = ops
-    translate(originText, { from: from || "en", to: to || "zh-cn" })
-        .then(({ text }) => res(text)).catch(() => res('翻译失败'))
+// 获取翻译结果
+const getGoogleTransResult = async(originText, ops = {}) => {
+    const { from, to } = ops;
+    try {
+        const result = await translate(originText, { from: from || config.defaultFrom, to: to || defaultTo });
+        return result;
+    } catch (error) {
+        console.log(error);
+        console.log('翻译失败');
+    }
+}
 
-})
-module.exports = outPut;
+module.exports = getGoogleTransResult;

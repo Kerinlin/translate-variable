@@ -1,31 +1,34 @@
 const vscode = require('vscode');
 const { showQuickPick, onDidChangeTextEditorSelection, showInputBox, showInformationMessage, activeTextEditor } = vscode.window;
 const { registerCommand } = vscode.commands;
+const { systemConfig: { SERVICE, BAIDU_APPID, BAIDU_KEY, SERVICE_LIST, IS_COPY, IS_REPLACE, IS_HUMP } } = require('./config/index.js');
+const toHump = require('./utils/utils.js');
 const { getConfiguration } = vscode.workspace;
+const config = getConfiguration();
 
-const transTokenArray = ['google', 'baidu']
+const getGoogleTransResult = require('./translate/google.js');
 
 function activate(context) {
     let text = '';
 
+    //读取配置
+    const isCopy = config.get(IS_COPY);
+    const isReplace = config.get(IS_REPLACE);
+    const isHump = config.get(IS_HUMP);
+
     onDidChangeTextEditorSelection(({ textEditor, selections: [selection, ] }) => {
-        // 获取选中的文字
         text = textEditor.document.getText(selection);
     })
 
-    let disposeToken = registerCommand('translateVariable.translateConfig', async function() {
-
-        //读取配置文件
-        let config = getConfiguration();
+    let disposeToken = registerCommand('translateVariable.translateConfig', async() => {
 
         //选择谷歌或者百度
-        const selectedItem = await showQuickPick(transTokenArray, {
+        const selectedItem = await showQuickPick(SERVICE_LIST, {
             canPickMany: false
         })
 
-        // console.log('select', selectedItem);
         // 设置服务
-        config.update('translateVariable.service', selectedItem, true);
+        config.update(SERVICE, selectedItem, true);
 
         // 配置百度翻译
         if (selectedItem === 'baidu') {
@@ -39,35 +42,56 @@ function activate(context) {
                 ignoreFocusOut: true, // 默认false，设置为true时鼠标点击别的地方输入框不会消失
                 placeHolder: '请输入百度翻译Key', // 在输入框内的提示信息
             })
-            config.update('translateVariable.baiduAppid', inputAppid, true);
-            config.update('translateVariable.baiduKey', inputKey, true);
+
+            //更新百度翻译配置
+            config.update(BAIDU_APPID, inputAppid, true);
+            config.update(BAIDU_KEY, inputKey, true);
         }
 
     });
 
-    let disposeToEn = registerCommand('translateVariable.toEN', function() {
+    let disposeToEn = registerCommand('translateVariable.toEN', async() => {
         const _text = text;
-        setTimeout(() => {
-            _text && translate(_text)
-                .then(response => {
-                    let res = response.toLowerCase().trim();
-                    showInformationMessage(`${_text} 翻译成 ${response}`);
-                    vscode.env.clipboard.writeText(res);
-                    activeTextEditor.edit((edit) => edit.replace(activeTextEditor.selection, res));
-                })
-        }, 20);
+        if (_text) {
+            const response = await getGoogleTransResult(_text, { from: 'zh-cn', to: 'en' });
+            let responseText = response.text;
+
+            let result = responseText.toLowerCase().trim();
+            showInformationMessage(`${_text} 翻译成 ${result}`);
+
+            // 将多个字符串的转换为驼峰命名
+            if (isHump) {
+                result = toHump(result);
+            }
+
+            // 是否复制翻译结果
+            if (isCopy) {
+                vscode.env.clipboard.writeText(result);
+            }
+            // 是否替换原文
+            if (isReplace) {
+                activeTextEditor.edit((edit) => edit.replace(activeTextEditor.selection, result));
+            }
+        }
     });
 
-    let disposeToCN = registerCommand('translateVariable.toCN', function() {
+    let disposeToCN = registerCommand('translateVariable.toCN', async() => {
         const _text = text;
-        setTimeout(() => {
-            _text && translate(_text)
-                .then(response => {
-                    let res = response.toLowerCase().trim();
-                    showInformationMessage(`${_text} 翻译成 ${response}`);
-                    vscode.env.clipboard.writeText(res)
-                })
-        }, 20);
+        if (_text) {
+            const response = await getGoogleTransResult(_text, { from: 'en', to: 'zh-cn' });
+            let responseText = response.text;
+            let result = responseText.toLowerCase().trim();
+            showInformationMessage(`${_text} 翻译成 ${result}`);
+
+            // 是否复制翻译结果
+            if (isCopy) {
+                vscode.env.clipboard.writeText(result);
+            }
+            // 是否替换原文
+            if (isReplace) {
+                activeTextEditor.edit((edit) => edit.replace(activeTextEditor.selection, result));
+            }
+        }
     });
 
     context.subscriptions.push(disposeToken);
@@ -75,7 +99,6 @@ function activate(context) {
     context.subscriptions.push(disposeToCN);
 }
 
-// this method is called when your extension is deactivated
 function deactivate() {}
 
 module.exports = {
