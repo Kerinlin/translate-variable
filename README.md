@@ -1,65 +1,30 @@
-# translate-variable README
+## 变量翻译
+自动将中文变量翻译成英文
+![](https://s2.loli.net/2021/12/29/pKg9b6Ol4qIcXf8.gif)
 
-This is the README for your extension "translate-variable". After writing up a brief description, we recommend including the following sections.
+### 特性
+1. 支持中英互翻
+2. 支持谷歌翻译与百度翻译
+3. 支持自动多个单词使用驼峰
+4. 支持自动替换原文
+5. 支持自动复制翻译结果
 
-## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### 使用说明
+**方法一**
 
-For example if there is an image subfolder under your extension project workspace:
+1. cmd/ctrl + shift + p 搜索 **Config translate token**
+2. 选择谷歌或者百度，需要注意的是使用百度需要自己去申请百度appid和key
+3. 配置好后可以直接使用了，选中需要翻译的变量，**cmd/ctrl+1** 是中文翻译成英文，**cmd/ctrl+2**是英文翻译成中文
 
-\!\[feature X\]\(images/feature-x.png\)
+**方法二**
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+1. 找到插件配置文件，直接修改配置，
 
-## Requirements
+![](https://s2.loli.net/2021/12/29/vJUWKPLAoXZD8OQ.png)
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+2. 快捷键与上面一样
 
-## Extension Settings
+### To-Do
+待定
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**

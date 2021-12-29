@@ -23,13 +23,12 @@ async function getRequestUrl(text, opts) {
         q: text
     };
     data[token.name] = token.value;
-    const requestUrl = `${config.googleBaseUrl}?${qs.stringify(data)}`;
+    const requestUrl = `${config.googleBaseUrl}${qs.stringify(data)}`;
     return requestUrl;
 }
 
 //处理返回的body
 async function handleBody(url, opts) {
-    console.log('url', url);
     const result = await got(url);
     let resultObj = {
         text: '',
@@ -106,6 +105,7 @@ const getGoogleTransResult = async(originText, ops = {}) => {
     const { from, to } = ops;
     try {
         const result = await translate(originText, { from: from || config.defaultFrom, to: to || defaultTo });
+        console.log('谷歌翻译结果', result.text);
         return result;
     } catch (error) {
         console.log(error);

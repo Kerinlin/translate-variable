@@ -2,6 +2,7 @@
     "name": "translate-variable",
     "displayName": "Translate Variable",
     "description": "Translate variable between en and zh-CN",
+    "author": "kerinlin",
     "version": "0.0.1",
     "engines": {
         "vscode": "^1.63.0"
@@ -28,13 +29,13 @@
             }
         ],
         "keybindings": [{
-                "key": "ctrl+e",
+                "key": "ctrl+1",
                 "mac": "cmd+1",
                 "when": "editorTextFocus",
                 "command": "translateVariable.toEN"
             },
             {
-                "key": "ctrl+r",
+                "key": "ctrl+2",
                 "mac": "cmd+2",
                 "when": "editorTextFocus",
                 "command": "translateVariable.toCN"
@@ -101,8 +102,10 @@
         "typescript": "^4.4.4"
     },
     "dependencies": {
+        "axios": "^0.24.0",
         "google-translate-token": "^1.0.0",
         "got": "^11.5.2",
+        "md5": "^2.3.0",
         "safe-eval": "^0.4.1"
     }
 }

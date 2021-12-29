@@ -8,6 +8,8 @@ const config = getConfiguration();
 
 const getGoogleTransResult = require('./translate/google.js');
 
+const getBaiduTransResult = require('./translate/baidu.js');
+
 function activate(context) {
     let text = '';
 
@@ -15,11 +17,15 @@ function activate(context) {
     const isCopy = config.get(IS_COPY);
     const isReplace = config.get(IS_REPLACE);
     const isHump = config.get(IS_HUMP);
+    const service = config.get(SERVICE);
+    const baiduAppid = config.get(BAIDU_APPID);
+    const baiduKey = config.get(BAIDU_KEY);
 
     onDidChangeTextEditorSelection(({ textEditor, selections: [selection, ] }) => {
         text = textEditor.document.getText(selection);
     })
 
+    //配置
     let disposeToken = registerCommand('translateVariable.translateConfig', async() => {
 
         //选择谷歌或者百度
@@ -50,11 +56,25 @@ function activate(context) {
 
     });
 
+    //中译英
     let disposeToEn = registerCommand('translateVariable.toEN', async() => {
         const _text = text;
         if (_text) {
-            const response = await getGoogleTransResult(_text, { from: 'zh-cn', to: 'en' });
-            let responseText = response.text;
+            let response, responseText;
+            console.log('service', service);
+            // 谷歌翻译
+            if (service === 'google') {
+                console.log('google');
+                response = await getGoogleTransResult(_text, { from: 'zh-cn', to: 'en' });
+                responseText = response.text;
+            }
+
+            // 百度翻译
+            if (service === 'baidu') {
+                console.log('baidu');
+                response = await getBaiduTransResult(_text, { from: "zh", to: "en", appid: baiduAppid, key: baiduKey });
+                responseText = response.dst;
+            }
 
             let result = responseText.toLowerCase().trim();
             showInformationMessage(`${_text} 翻译成 ${result}`);
@@ -75,21 +95,30 @@ function activate(context) {
         }
     });
 
+    //英译中
     let disposeToCN = registerCommand('translateVariable.toCN', async() => {
         const _text = text;
         if (_text) {
-            const response = await getGoogleTransResult(_text, { from: 'en', to: 'zh-cn' });
-            let responseText = response.text;
+            let response, responseText;
+
+            // 谷歌翻译
+            if (service === 'google') {
+                response = await getGoogleTransResult(_text, { from: 'en', to: 'zh-cn' });
+                responseText = response.text;
+            }
+
+            // 百度翻译
+            if (service === 'baidu') {
+                response = await getBaiduTransResult(_text, { from: "en", to: "zh", appid: baiduAppid, key: baiduKey });
+                responseText = response.dst;
+            }
+
             let result = responseText.toLowerCase().trim();
             showInformationMessage(`${_text} 翻译成 ${result}`);
 
             // 是否复制翻译结果
             if (isCopy) {
                 vscode.env.clipboard.writeText(result);
-            }
-            // 是否替换原文
-            if (isReplace) {
-                activeTextEditor.edit((edit) => edit.replace(activeTextEditor.selection, result));
             }
         }
     });

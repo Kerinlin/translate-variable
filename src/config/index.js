@@ -1,5 +1,6 @@
 const config = {
-    googleBaseUrl: 'https://translate.google.cn/translate_a/single',
+    googleBaseUrl: 'https://translate.google.cn/translate_a/single?',
+    baiduBaseUrl: 'http://api.fanyi.baidu.com/api/trans/vip/translate?',
     defaultFrom: 'en',
     defaultTo: 'zh-cn',
     systemConfig: {
