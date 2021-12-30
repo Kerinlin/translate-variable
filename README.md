@@ -1,11 +1,11 @@
 ## 变量翻译
+
 vscode翻译工具，适合英语差，记性差的同学使用，可用于变量翻译，查看英文注释等功能
 
 ![](https://s2.loli.net/2021/12/30/vzPfuFEhpMLW8jD.gif)
 
-
-
 ### 特性
+
 1. 支持谷歌翻译与百度翻译
 2. 支持自动多个单词使用驼峰
 3. 支持自动替换原文
@@ -20,16 +20,14 @@ vscode翻译工具，适合英语差，记性差的同学使用，可用于变�
 
 2. 设置好后就能直接使用了，**cmd/ctrl + t**可以将中文翻译成英文，可以完成复制替换的操作
 
-![](https://s2.loli.net/2021/12/30/akJQFqMgITyElAV.gif)
-
+   ![](https://s2.loli.net/2021/12/30/akJQFqMgITyElAV.gif)
 
 
 3. 划词翻译，直接划词悬停就能将其他语言翻译成中文
 
-![](https://s2.loli.net/2021/12/30/uNvKPBFWx7RAdq2.gif)
-
-
+   ![](https://s2.loli.net/2021/12/30/uNvKPBFWx7RAdq2.gif)
 
 ### To-Do
+
 待定
 
