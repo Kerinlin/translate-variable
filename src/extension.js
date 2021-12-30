@@ -1,8 +1,7 @@
 const vscode = require('vscode');
 const { showQuickPick, onDidChangeTextEditorSelection, showInformationMessage, showWarningMessage, activeTextEditor, onDidChangeActiveTextEditor } = vscode.window;
 const { registerCommand } = vscode.commands;
-const { systemConfig } = require('./config/index.js');
-const { SERVICE, BAIDU_APPID, BAIDU_KEY, SERVICE_LIST, IS_COPY, IS_REPLACE, IS_HUMP } = systemConfig;
+const { systemConfig: { SERVICE, BAIDU_APPID, BAIDU_KEY, SERVICE_LIST, IS_COPY, IS_REPLACE, IS_HUMP } } = require('./config/index.js');
 const toHump = require('./utils/utils.js');
 const { getConfiguration, onDidChangeConfiguration } = vscode.workspace;
 // const config = getConfiguration();
