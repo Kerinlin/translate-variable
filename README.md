@@ -18,7 +18,7 @@ vscode翻译工具，适合英语差，记性差的同学使用，可用于变�
 
    ![image-20211230190740136](https://s2.loli.net/2021/12/30/icwE5Lrpz1ZWGtj.png)
 
-2.设置好后就能直接使用了，**cmd/ctrl + t**可以将中文翻译成英文，可以完成复制替换的操作
+2. 设置好后就能直接使用了，**cmd/ctrl + t**可以将中文翻译成英文，可以完成复制替换的操作
 
 ![](https://s2.loli.net/2021/12/30/akJQFqMgITyElAV.gif)
 
