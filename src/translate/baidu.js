@@ -17,8 +17,9 @@ async function getBaiduTransResult(text = "", opt = {}) {
         const query = encodeURI(q);
         const params = `q=${query}&from=${from}&to=${to}&appid=${appid}&salt=${salt}&sign=${sign}`;
         const url = `${config.baiduBaseUrl}${params}`;
+        console.log(url);
         const res = await axios.get(url);
-        console.log('百度翻译结果', res.data.trans_result[0].dsc);
+        console.log('百度翻译结果', res.data.trans_result[0]);
         return res.data.trans_result[0];
     } catch (error) {
         console.log({ error });

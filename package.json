@@ -3,15 +3,27 @@
     "displayName": "Translate Variable",
     "description": "Translate variable between en and zh-CN",
     "author": "kerinlin",
+    "publisher": "kerinlin",
     "version": "0.0.1",
+    "icon": "src/assets/logo.png",
     "engines": {
         "vscode": "^1.63.0"
     },
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "translate"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Kerinlin/translate-variable"
+    },
     "activationEvents": [
-        "*"
+        "onCommand:translateVariable.translateConfig",
+        "onCommand:translateVariable.toEN",
+        "onCommand:translateVariable.toCN",
+        "onStartupFinished"
     ],
     "main": "./src/extension.js",
     "contributes": {
@@ -22,25 +34,14 @@
             {
                 "command": "translateVariable.toEN",
                 "title": "Translate to EN"
-            },
-            {
-                "command": "translateVariable.toCN",
-                "title": "Translate to CN"
             }
         ],
         "keybindings": [{
-                "key": "ctrl+1",
-                "mac": "cmd+1",
-                "when": "editorTextFocus",
-                "command": "translateVariable.toEN"
-            },
-            {
-                "key": "ctrl+2",
-                "mac": "cmd+2",
-                "when": "editorTextFocus",
-                "command": "translateVariable.toCN"
-            }
-        ],
+            "key": "ctrl+t",
+            "mac": "cmd+t",
+            "when": "editorTextFocus",
+            "command": "translateVariable.toEN"
+        }],
         "configuration": {
             "type": "object",
             "title": "变量翻译设置",
@@ -68,11 +69,6 @@
                     "default": "",
                     "description": "百度翻译key"
                 },
-                "translateVariable.isReplace": {
-                    "type": "boolean",
-                    "default": "true",
-                    "description": "是否将翻译后的结果替换选中文字"
-                },
                 "translateVariable.isCopy": {
                     "type": "boolean",
                     "default": "true",
@@ -82,6 +78,11 @@
                     "type": "boolean",
                     "default": "true",
                     "description": "多个字符串是否需要驼峰命名"
+                },
+                "translateVariable.isReplace": {
+                    "type": "boolean",
+                    "default": "true",
+                    "description": "是否使用翻译后的结果替换原文"
                 }
             }
         }
