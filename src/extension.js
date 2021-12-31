@@ -2,11 +2,11 @@ const vscode = require('vscode');
 const { showQuickPick, onDidChangeTextEditorSelection, showInformationMessage, showWarningMessage, activeTextEditor, onDidChangeActiveTextEditor } = vscode.window;
 const { registerCommand } = vscode.commands;
 const { systemConfig: { SERVICE, BAIDU_APPID, BAIDU_KEY, SERVICE_LIST, IS_COPY, IS_REPLACE, IS_HUMP } } = require('./config/index.js');
-const toHump = require('./utils/utils.js');
+const { toHump } = require('./utils/utils.js');
 const { getConfiguration, onDidChangeConfiguration } = vscode.workspace;
 // const config = getConfiguration();
 
-const getGoogleTransResult = require('./translate/google.js');
+// const getGoogleTransResult = require('./translate/google.js');
 
 const getBaiduTransResult = require('./translate/baidu.js');
 
@@ -38,7 +38,7 @@ function activate(context) {
     //配置
     const disposeToken = registerCommand('translateVariable.translateConfig', async() => {
 
-        //选择谷歌或者百度
+        //选择服务
         const selectedItem = await showQuickPick(SERVICE_LIST, {
             canPickMany: false
         })
@@ -70,12 +70,6 @@ function activate(context) {
         // 处理翻译结果
         if (_text) {
             let response, responseText;
-            // 谷歌翻译
-            if (service === 'google') {
-                console.log('google');
-                response = await getGoogleTransResult(_text, { from: 'zh-cn', to: 'en' });
-                responseText = response.text;
-            }
 
             // 百度翻译
             if (service === 'baidu') {
@@ -94,7 +88,7 @@ function activate(context) {
             // 是否复制翻译结果
             if (isCopy) {
                 vscode.env.clipboard.writeText(result);
-                service === 'google' ? showInformationMessage(`已复制谷歌翻译结果${_text} ==> ${result}`) : showInformationMessage(`已复制百度翻译结果${_text} ==> ${result}`)
+                showInformationMessage(`已复制百度翻译结果${_text} ==> ${result}`)
             }
 
 
@@ -115,19 +109,20 @@ function activate(context) {
             const baiduAppid = config.get(BAIDU_APPID);
             const baiduKey = config.get(BAIDU_KEY);
 
+
             let response, responseText;
+
+            // 划中的词
             const selected = document.getText(active.selection);
-            // 谷歌翻译
-            if (service === 'google') {
-                response = await getGoogleTransResult(selected, { from: 'auto', to: 'zh-cn' });
-                responseText = response.text;
+
+            if (selected) {
+                // 百度翻译
+                if (service === 'baidu') {
+                    response = await getBaiduTransResult(selected, { from: "auto", to: "zh", appid: baiduAppid, key: baiduKey });
+                    responseText = response.dst;
+                }
             }
 
-            // 百度翻译
-            if (service === 'baidu') {
-                response = await getBaiduTransResult(selected, { from: "auto", to: "zh", appid: baiduAppid, key: baiduKey });
-                responseText = response.dst;
-            }
             // 悬浮提示
             return new vscode.Hover(`${responseText}`);
         }

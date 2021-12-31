@@ -4,7 +4,7 @@
     "description": "Translate variable between en and zh-CN",
     "author": "kerinlin",
     "publisher": "kerinlin",
-    "version": "0.0.1",
+    "version": "0.1.4",
     "icon": "src/assets/logo.png",
     "engines": {
         "vscode": "^1.63.0"
@@ -48,13 +48,11 @@
             "properties": {
                 "translateVariable.service": {
                     "type": "string",
-                    "default": "google",
+                    "default": "baidu",
                     "enum": [
-                        "google",
                         "baidu"
                     ],
                     "enumDescriptions": [
-                        "谷歌翻译国内可能需要梯子访问",
                         "百度翻译需要配置appid和key"
                     ],
                     "description": "选择翻译服务"
@@ -104,9 +102,6 @@
     },
     "dependencies": {
         "axios": "^0.24.0",
-        "google-translate-token": "^1.0.0",
-        "got": "^11.5.2",
-        "md5": "^2.3.0",
-        "safe-eval": "^0.4.1"
+        "md5": "^2.3.0"
     }
 }

@@ -1,5 +1,5 @@
 const config = {
-    googleBaseUrl: 'https://translate.google.cn/translate_a/single?',
+    // googleBaseUrl: 'https://translate.google.cn/translate_a/single?',
     baiduBaseUrl: 'http://api.fanyi.baidu.com/api/trans/vip/translate?',
     defaultFrom: 'en',
     defaultTo: 'zh-cn',
@@ -10,7 +10,7 @@ const config = {
         IS_REPLACE: 'translateVariable.isReplace',
         IS_COPY: 'translateVariable.isCopy',
         IS_HUMP: 'translateVariable.isHump',
-        SERVICE_LIST: ['google', 'baidu']
+        SERVICE_LIST: ['baidu']
     },
 
 }

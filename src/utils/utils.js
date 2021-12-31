@@ -11,4 +11,6 @@ function toHump(str) {
     return result;
 }
 
-module.exports = toHump;
+module.exports = {
+    toHump
+};

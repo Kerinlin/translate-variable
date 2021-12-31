@@ -102,6 +102,7 @@ async function translate(text, opts) {
 
 // 获取翻译结果
 const getGoogleTransResult = async(originText, ops = {}) => {
+    console.log('进入谷歌翻译');
     const { from, to } = ops;
     try {
         const result = await translate(originText, { from: from || config.defaultFrom, to: to || defaultTo });
