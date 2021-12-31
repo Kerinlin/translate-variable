@@ -4,7 +4,7 @@
     "description": "Translate variable between en and zh-CN",
     "author": "kerinlin",
     "publisher": "kerinlin",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "icon": "src/assets/logo.png",
     "engines": {
         "vscode": "^1.63.0"
@@ -72,10 +72,20 @@
                     "default": "true",
                     "description": "是否复制翻译后的结果"
                 },
-                "translateVariable.isHump": {
-                    "type": "boolean",
-                    "default": "true",
-                    "description": "多个字符串是否需要驼峰命名"
+                "translateVariable.renameMethodName": {
+                    "type": "string",
+                    "default": "hump",
+                    "description": "变量命名方式",
+                    "enum": [
+                        "hump",
+                        "underline",
+                        "none"
+                    ],
+                    "enumDescriptions": [
+                        "驼峰命名",
+                        "下划线命名",
+                        "原字符"
+                    ]
                 },
                 "translateVariable.isReplace": {
                     "type": "boolean",

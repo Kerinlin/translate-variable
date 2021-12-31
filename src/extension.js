@@ -1,8 +1,8 @@
 const vscode = require('vscode');
 const { showQuickPick, onDidChangeTextEditorSelection, showInformationMessage, showWarningMessage, activeTextEditor, onDidChangeActiveTextEditor } = vscode.window;
 const { registerCommand } = vscode.commands;
-const { systemConfig: { SERVICE, BAIDU_APPID, BAIDU_KEY, SERVICE_LIST, IS_COPY, IS_REPLACE, IS_HUMP } } = require('./config/index.js');
-const { toHump } = require('./utils/utils.js');
+const { systemConfig: { SERVICE, BAIDU_APPID, BAIDU_KEY, SERVICE_LIST, IS_COPY, IS_REPLACE, RENAME_METHOD_NAME } } = require('./config/index.js');
+const { convertName } = require('./utils/utils.js');
 const { getConfiguration, onDidChangeConfiguration } = vscode.workspace;
 // const config = getConfiguration();
 
@@ -55,7 +55,7 @@ function activate(context) {
         //读取配置
         const isCopy = config.get(IS_COPY);
         const isReplace = config.get(IS_REPLACE);
-        const isHump = config.get(IS_HUMP);
+        const renameMethodName = config.get(RENAME_METHOD_NAME);
         const service = config.get(SERVICE);
         const baiduAppid = config.get(BAIDU_APPID);
         const baiduKey = config.get(BAIDU_KEY);
@@ -80,9 +80,9 @@ function activate(context) {
 
             let result = responseText.toLowerCase().trim();
 
-            // 将多个字符串的转换为驼峰命名
-            if (isHump) {
-                result = toHump(result);
+            // 变量命名方式
+            if (renameMethodName !== 'none') {
+                result = convertName(result, renameMethodName);
             }
 
             // 是否复制翻译结果

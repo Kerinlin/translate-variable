@@ -9,7 +9,7 @@ const config = {
         BAIDU_KEY: 'translateVariable.baiduKey',
         IS_REPLACE: 'translateVariable.isReplace',
         IS_COPY: 'translateVariable.isCopy',
-        IS_HUMP: 'translateVariable.isHump',
+        RENAME_METHOD_NAME: 'translateVariable.renameMethodName',
         SERVICE_LIST: ['baidu']
     },
 
