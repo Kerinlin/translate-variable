@@ -4,6 +4,7 @@ All notable changes to the "translate-variable" extension will be documented in 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## [0.1.7] - 2022-01-07
+### Added
 
-- Initial release
+- 添加对有道云翻译的支持

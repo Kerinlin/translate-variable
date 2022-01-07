@@ -1,6 +1,6 @@
 ## 变量翻译
 
-vscode翻译工具，适合英语差，记性差的同学使用，可用于变量翻译，查看英文注释等功能
+vscode翻译工具，适合英语差，记性差的同学使用，可用于变量翻译，查看英文注释等功能，支持百度翻译，有道云翻译
 
 ![](https://s2.loli.net/2021/12/30/NotcCIyDVFAQ4dp.gif)
 
@@ -8,14 +8,16 @@ vscode翻译工具，适合英语差，记性差的同学使用，可用于变�
 
 ## 注意
 
-**一定需要确认自己的百度翻译通用服务是否正确开启，可去[控制台](https://fanyi-api.baidu.com/api/trans/product/desktop)检查自己的通用翻译是否开启**
+**使用百度翻译一定需要确认自己的百度翻译通用服务是否正确开启，可去[控制台](https://fanyi-api.baidu.com/api/trans/product/desktop)检查自己的通用翻译是否开启**
 
 ![image-20220107110432775](https://s2.loli.net/2022/01/07/n8ejDcZIbxmkVEO.png)
 
+有问题或者建议请前往[issue](https://fanyi-api.baidu.com/api/trans/product/desktop)反馈
+
 ### 特性
 
-1. 支持百度翻译,后续将支持更多选择(欢迎各位前往[issue](https://github.com/Kerinlin/translate-variable/issues)提供翻译服务的申请链接,注意一定要是免费的，付费的翻译服务小弟没钱搞不起)
-2. 支持自动多个单词使用驼峰，或者下划线
+1. 支持百度翻译,有道云翻译,后续将支持更多选择(欢迎各位前往[issue](https://github.com/Kerinlin/translate-variable/issues)提供翻译服务的申请链接,注意一定要是免费的，付费的翻译服务小弟没钱搞不起)
+2. 支持自动多个单词使用驼峰，或者下划线命名
 3. 支持自动替换原文
 4. 支持自动复制翻译结果
 5. 支持划词翻译

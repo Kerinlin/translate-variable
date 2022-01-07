@@ -1,117 +1,132 @@
 {
-    "name": "translate-variable",
-    "displayName": "Translate Variable",
-    "description": "Translate variable between en and zh-CN",
-    "author": "kerinlin",
-    "publisher": "kerinlin",
-    "version": "0.1.6",
-    "icon": "src/assets/logo.png",
-    "engines": {
-        "vscode": "^1.63.0"
-    },
-    "categories": [
-        "Other"
+  "name": "translate-variable",
+  "displayName": "Translate Variable",
+  "description": "Translate variable between en and zh-CN",
+  "author": "kerinlin",
+  "publisher": "kerinlin",
+  "version": "0.1.7",
+  "icon": "src/assets/logo.png",
+  "engines": {
+    "vscode": "^1.63.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "translate"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kerinlin/translate-variable"
+  },
+  "activationEvents": [
+    "onCommand:translateVariable.translateConfig",
+    "onCommand:translateVariable.toEN",
+    "onCommand:translateVariable.toCN",
+    "onStartupFinished"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "translateVariable.translateConfig",
+        "title": "Config translate token"
+      },
+      {
+        "command": "translateVariable.toEN",
+        "title": "Translate to EN"
+      }
     ],
-    "keywords": [
-        "translate"
+    "keybindings": [
+      {
+        "key": "ctrl+t",
+        "mac": "cmd+t",
+        "when": "editorTextFocus",
+        "command": "translateVariable.toEN"
+      }
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Kerinlin/translate-variable"
-    },
-    "activationEvents": [
-        "onCommand:translateVariable.translateConfig",
-        "onCommand:translateVariable.toEN",
-        "onCommand:translateVariable.toCN",
-        "onStartupFinished"
-    ],
-    "main": "./src/extension.js",
-    "contributes": {
-        "commands": [{
-                "command": "translateVariable.translateConfig",
-                "title": "Config translate token"
-            },
-            {
-                "command": "translateVariable.toEN",
-                "title": "Translate to EN"
-            }
-        ],
-        "keybindings": [{
-            "key": "ctrl+t",
-            "mac": "cmd+t",
-            "when": "editorTextFocus",
-            "command": "translateVariable.toEN"
-        }],
-        "configuration": {
-            "type": "object",
-            "title": "变量翻译设置",
-            "properties": {
-                "translateVariable.service": {
-                    "type": "string",
-                    "default": "baidu",
-                    "enum": [
-                        "baidu"
-                    ],
-                    "enumDescriptions": [
-                        "百度翻译需要配置appid和key"
-                    ],
-                    "description": "选择翻译服务"
-                },
-                "translateVariable.baiduAppid": {
-                    "type": "string",
-                    "default": "",
-                    "description": "百度翻译appid"
-                },
-                "translateVariable.baiduKey": {
-                    "type": "string",
-                    "default": "",
-                    "description": "百度翻译key"
-                },
-                "translateVariable.isCopy": {
-                    "type": "boolean",
-                    "default": "true",
-                    "description": "是否复制翻译后的结果"
-                },
-                "translateVariable.renameMethodName": {
-                    "type": "string",
-                    "default": "hump",
-                    "description": "变量命名方式",
-                    "enum": [
-                        "hump",
-                        "underline",
-                        "none"
-                    ],
-                    "enumDescriptions": [
-                        "驼峰命名",
-                        "下划线命名",
-                        "原字符"
-                    ]
-                },
-                "translateVariable.isReplace": {
-                    "type": "boolean",
-                    "default": "true",
-                    "description": "是否使用翻译后的结果替换原文"
-                }
-            }
+    "configuration": {
+      "type": "object",
+      "title": "变量翻译设置",
+      "properties": {
+        "translateVariable.service": {
+          "type": "string",
+          "default": "baidu",
+          "enum": [
+            "baidu",
+            "youdao"
+          ],
+          "enumDescriptions": [
+            "百度翻译需要配置appid和key",
+            "有道翻译需要配置应用ID与应用秘钥"
+          ],
+          "description": "选择翻译服务"
+        },
+        "translateVariable.baiduAppid": {
+          "type": "string",
+          "default": "",
+          "description": "百度翻译appid"
+        },
+        "translateVariable.baiduKey": {
+          "type": "string",
+          "default": "",
+          "description": "百度翻译key"
+        },
+        "translateVariable.youdaoID": {
+          "type": "string",
+          "default": "",
+          "description": "有道翻译应用ID"
+        },
+        "translateVariable.youdaoKey": {
+          "type": "string",
+          "default": "",
+          "description": "有道翻译应用秘钥"
+        },
+        "translateVariable.isCopy": {
+          "type": "boolean",
+          "default": "true",
+          "description": "是否复制翻译后的结果"
+        },
+        "translateVariable.renameMethodName": {
+          "type": "string",
+          "default": "hump",
+          "description": "变量命名方式",
+          "enum": [
+            "hump",
+            "underline",
+            "none"
+          ],
+          "enumDescriptions": [
+            "驼峰命名",
+            "下划线命名",
+            "原字符"
+          ]
+        },
+        "translateVariable.isReplace": {
+          "type": "boolean",
+          "default": "true",
+          "description": "是否使用翻译后的结果替换原文"
         }
-    },
-    "scripts": {
-        "lint": "eslint .",
-        "pretest": "yarn run lint"
-    },
-    "devDependencies": {
-        "@types/glob": "^7.1.4",
-        "@types/mocha": "^9.0.0",
-        "@types/node": "14.x",
-        "@types/vscode": "^1.63.0",
-        "@vscode/test-electron": "^1.6.2",
-        "eslint": "^8.1.0",
-        "glob": "^7.1.7",
-        "mocha": "^9.1.3",
-        "typescript": "^4.4.4"
-    },
-    "dependencies": {
-        "axios": "^0.24.0",
-        "md5": "^2.3.0"
+      }
     }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "yarn run lint"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.4",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "14.x",
+    "@types/vscode": "^1.63.0",
+    "@vscode/test-electron": "^1.6.2",
+    "eslint": "^8.1.0",
+    "glob": "^7.1.7",
+    "mocha": "^9.1.3",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "md5": "^2.3.0"
+  }
 }
