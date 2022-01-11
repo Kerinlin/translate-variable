@@ -1,9 +1,8 @@
 # Change Log
+## [0.1.8] - 2022-01-11
+### Added
 
-All notable changes to the "translate-variable" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
+- 添加对谷歌翻译的支持
 ## [0.1.7] - 2022-01-07
 ### Added
 

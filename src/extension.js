@@ -7,6 +7,7 @@ const { getConfiguration, onDidChangeConfiguration } = vscode.workspace;
 
 const getBaiduTransResult = require('./translate/baidu.js');
 const getYoudaoTransResult = require('./translate/youdao.js');
+const getGoogleTransResult = require('./translate/google.js');
 
 function activate(context) {
   let config = getConfiguration();
@@ -89,6 +90,13 @@ function activate(context) {
         responseText = response;
       }
 
+      // 谷歌翻译
+      if (service === 'google') {
+        console.log(`google`);
+        response = await getGoogleTransResult(_text, { from: "zh-CN", to: "en"});
+        responseText = response;
+      }
+
       let result = responseText.toLowerCase().trim();
 
       // 变量命名方式
@@ -136,6 +144,11 @@ function activate(context) {
 
         if(service === 'youdao') {
           response = await getYoudaoTransResult(selected, { from: "auto", to: "zh-CHS", appid: youdaoID, secretKey: youdaoKey });
+          responseText = response;
+        }
+
+        if(service === 'google') {
+          response = await getGoogleTransResult(selected, { from: "auto", to: "zh-CN" });
           responseText = response;
         }
       }

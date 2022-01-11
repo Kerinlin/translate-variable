@@ -1,5 +1,4 @@
 const config = {
-    // googleBaseUrl: 'https://translate.google.cn/translate_a/single?',
     baiduBaseUrl: 'http://api.fanyi.baidu.com/api/trans/vip/translate?',
     youdaoBaseUrl: 'https://openapi.youdao.com/api',
     defaultFrom: 'en',
@@ -13,7 +12,7 @@ const config = {
         IS_REPLACE: 'translateVariable.isReplace',
         IS_COPY: 'translateVariable.isCopy',
         RENAME_METHOD_NAME: 'translateVariable.renameMethodName',
-        SERVICE_LIST: ['baidu','youdao']
+        SERVICE_LIST: ['baidu','youdao','google']
     },
 
 }
