@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const { showQuickPick, onDidChangeTextEditorSelection, showInformationMessage, showWarningMessage, activeTextEditor, onDidChangeActiveTextEditor } = vscode.window;
 const { registerCommand } = vscode.commands;
-const { systemConfig: { SERVICE, BAIDU_APPID, BAIDU_KEY, SERVICE_LIST, IS_COPY, IS_REPLACE, RENAME_METHOD_NAME, YOUDAO_APPID, YOUDAO_KEY } } = require('./config/index.js');
+const { systemConfig: { SERVICE, BAIDU_APPID, BAIDU_KEY, SERVICE_LIST, IS_COPY, IS_REPLACE, RENAME_METHOD_NAME, YOUDAO_APPID, YOUDAO_KEY, TRANS_HOVER } } = require('./config/index.js');
 const { convertName } = require('./utils/utils.js');
 const { getConfiguration, onDidChangeConfiguration } = vscode.workspace;
 
@@ -93,7 +93,7 @@ function activate(context) {
       // 谷歌翻译
       if (service === 'google') {
         console.log(`google`);
-        response = await getGoogleTransResult(_text, { from: "zh-CN", to: "en"});
+        response = await getGoogleTransResult(_text, { from: "zh-CN", to: "en" });
         responseText = response;
       }
 
@@ -124,17 +124,23 @@ function activate(context) {
   // 划词翻译检测
   const disposeHover = vscode.languages.registerHoverProvider("*", {
     async provideHover(document, position, token) {
+      const isTransHover = config.get(TRANS_HOVER);
+      // 如果关闭划词翻译配置，不执行后面的hover操作
+      if (!isTransHover) {
+        return false;
+      }
+      
       const service = config.get(SERVICE);
       const baiduAppid = config.get(BAIDU_APPID);
       const baiduKey = config.get(BAIDU_KEY);
       const youdaoID = config.get(YOUDAO_APPID);
       const youdaoKey = config.get(YOUDAO_KEY);
 
-      let response, responseText;
+      let response;
+      let responseText = '';
 
       // 划中的词
       const selected = document.getText(active.selection);
-
       if (selected) {
         // 百度翻译
         if (service === 'baidu') {
@@ -142,12 +148,12 @@ function activate(context) {
           responseText = response.dst;
         }
 
-        if(service === 'youdao') {
+        if (service === 'youdao') {
           response = await getYoudaoTransResult(selected, { from: "auto", to: "zh-CHS", appid: youdaoID, secretKey: youdaoKey });
           responseText = response;
         }
 
-        if(service === 'google') {
+        if (service === 'google') {
           response = await getGoogleTransResult(selected, { from: "auto", to: "zh-CN" });
           responseText = response;
         }

@@ -4,7 +4,7 @@
   "description": "Translate variable between en and zh-CN",
   "author": "kerinlin",
   "publisher": "kerinlin",
-  "version": "0.1.81",
+  "version": "0.1.9",
   "icon": "src/assets/logo.png",
   "engines": {
     "vscode": "^1.63.0"
@@ -108,6 +108,11 @@
           "type": "boolean",
           "default": "true",
           "description": "是否使用翻译后的结果替换原文"
+        },
+        "translateVariable.isTransHover": {
+          "type": "boolean",
+          "default": "true",
+          "description": "是否开启划词翻译"
         }
       }
     }

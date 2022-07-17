@@ -12,7 +12,8 @@ const config = {
         IS_REPLACE: 'translateVariable.isReplace',
         IS_COPY: 'translateVariable.isCopy',
         RENAME_METHOD_NAME: 'translateVariable.renameMethodName',
-        SERVICE_LIST: ['baidu','youdao','google']
+        SERVICE_LIST: ['baidu','youdao','google'],
+        TRANS_HOVER: 'translateVariable.isTransHover'
     },
 
 }

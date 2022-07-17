@@ -1,4 +1,8 @@
 # Change Log
+
+## [0.1.9] - 2022-07-17
+### Add translate hover config
+
 ## [0.1.8] - 2022-01-11
 ### Added
 
