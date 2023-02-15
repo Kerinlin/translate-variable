@@ -22,12 +22,12 @@ function activate(context) {
 
   //配置更改检测
   const disposeConfig = onDidChangeConfiguration(() => {
-    console.log('配置变更了');
+    // console.log('配置变更了');
     config = getConfiguration();
   })
 
   const edit = onDidChangeActiveTextEditor((textEditor) => {
-    console.log('activeEditor改变了');
+    // console.log('activeEditor改变了');
     //更换激活的编辑器对象
     if (textEditor) {
       active = textEditor;
@@ -61,7 +61,7 @@ function activate(context) {
     const youdaoID = config.get(YOUDAO_APPID);
     const youdaoKey = config.get(YOUDAO_KEY);
 
-    console.log('service in config', service);
+    // console.log('service in config', service);
 
     // 百度翻译检测
     if (service === 'baidu' && (!baiduAppid || !baiduKey)) {

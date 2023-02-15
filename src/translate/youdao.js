@@ -45,7 +45,7 @@ async function getYouDaoTransResult(text, opt = {}) {
     return res.data.translation[0];
   }
   catch (err) {
-    console.log(error);
+    console.log(err);
   }
 }
 
