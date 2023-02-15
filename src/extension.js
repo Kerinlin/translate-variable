@@ -93,7 +93,7 @@ function activate(context) {
 
       // 谷歌翻译
       if (service === 'google') {
-        console.log(`google`);
+        // console.log(`google`);
         response = await getGoogleTransResult(_text, { from: "zh-CN", to: "en" });
         responseText = response;
       }
