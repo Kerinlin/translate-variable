@@ -27,7 +27,7 @@ function activate(context) {
   })
 
   const edit = onDidChangeActiveTextEditor((textEditor) => {
-    console.log('activeEditor改变了');
+    // console.log('activeEditor改变了');
     //更换激活的编辑器对象
     if (textEditor) {
       active = textEditor;
@@ -93,7 +93,7 @@ function activate(context) {
 
       // 谷歌翻译
       if (service === 'google') {
-        // console.log(`google`);
+        console.log(`google`);
         response = await getGoogleTransResult(_text, { from: "zh-CN", to: "en" });
         responseText = response;
       }
