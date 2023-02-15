@@ -22,7 +22,7 @@ function activate(context) {
 
   //配置更改检测
   const disposeConfig = onDidChangeConfiguration(() => {
-    console.log('配置变更了');
+    // console.log('配置变更了');
     config = getConfiguration();
   })
 
