@@ -4,7 +4,7 @@
   "description": "Translate variable between en and zh-CN",
   "author": "kerinlin",
   "publisher": "kerinlin",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "icon": "src/assets/logo.png",
   "engines": {
     "vscode": "^1.63.0"
@@ -51,16 +51,18 @@
       "properties": {
         "translateVariable.service": {
           "type": "string",
-          "default": "baidu",
+          "default": "lingva",
           "enum": [
             "baidu",
             "youdao",
-            "google"
+            "google",
+            "lingva"
           ],
           "enumDescriptions": [
             "百度翻译需要配置appid和key",
             "有道翻译需要配置应用ID与应用秘钥",
-            "谷歌翻译无需配置，但是需要梯子"
+            "谷歌翻译无需配置，但是需要梯子",
+            "lingva,免费开源"
           ],
           "description": "选择翻译服务"
         },

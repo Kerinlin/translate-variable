@@ -8,6 +8,7 @@ const { getConfiguration, onDidChangeConfiguration } = vscode.workspace;
 const getBaiduTransResult = require('./translate/baidu.js');
 const getYoudaoTransResult = require('./translate/youdao.js');
 const getGoogleTransResult = require('./translate/google.js');
+const getLingvaResult = require('./translate/lingva');
 
 function activate(context) {
   let config = getConfiguration();
@@ -97,6 +98,13 @@ function activate(context) {
         responseText = response;
       }
 
+      // lingva翻译
+      if (service === 'lingva') {
+        console.log(`lingva`);
+        response = await getLingvaResult(_text, { from: "zh", to: "en" });
+        responseText = response;
+      }
+
       let result = responseText.toLowerCase().trim();
 
       // 变量命名方式
@@ -129,7 +137,7 @@ function activate(context) {
       if (!isTransHover) {
         return false;
       }
-      
+
       const service = config.get(SERVICE);
       const baiduAppid = config.get(BAIDU_APPID);
       const baiduKey = config.get(BAIDU_KEY);
@@ -155,6 +163,12 @@ function activate(context) {
 
         if (service === 'google') {
           response = await getGoogleTransResult(selected, { from: "auto", to: "zh-CN" });
+          responseText = response;
+        }
+
+        if (service === 'lingva') {
+          console.log(`lingva`);
+          response = await getLingvaResult(selected, { from: "auto", to: "zh" });
           responseText = response;
         }
       }

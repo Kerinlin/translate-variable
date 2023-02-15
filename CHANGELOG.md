@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.2.0] - 2023-02-14
+### Add lingva translate
+
 ## [0.1.9] - 2022-07-17
 ### Add translate hover config
 
