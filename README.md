@@ -4,7 +4,8 @@ vscode翻译工具，适合英语差，记性差的同学使用，可用于变�
 
 ![](https://s2.loli.net/2021/12/30/NotcCIyDVFAQ4dp.gif)
 
-
+## 最新更新
+- 添加必应翻译，爬取DOM获取结果
 
 ## 注意
 
@@ -14,7 +15,6 @@ vscode翻译工具，适合英语差，记性差的同学使用，可用于变�
 
 2. **谷歌翻译，不需要配置，但是需要外网环境，请自备梯子，谷歌翻译经过自己测试不太稳定**
 
-3. **首选Lingva，目前测试很稳定，不需要任何配置就能翻译**
 
 有问题或者建议请前往[issue](https://github.com/Kerinlin/translate-variable/issues)反馈
 ### 特性
