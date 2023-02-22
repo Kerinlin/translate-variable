@@ -9,6 +9,7 @@ const getBaiduTransResult = require('./translate/baidu.js');
 const getYoudaoTransResult = require('./translate/youdao.js');
 const getGoogleTransResult = require('./translate/google.js');
 const getLingvaResult = require('./translate/lingva');
+const getBingResult = require('./translate/bing');
 
 function activate(context) {
   let config = getConfiguration();
@@ -105,6 +106,13 @@ function activate(context) {
         responseText = response;
       }
 
+      // bing翻译
+      if (service === 'bing') {
+        console.log(`bing`);
+        response = await getBingResult(_text);
+        responseText = response && response.en;
+      }
+
       let result = responseText.toLowerCase().trim();
 
       // 变量命名方式
@@ -170,6 +178,12 @@ function activate(context) {
           console.log(`lingva`);
           response = await getLingvaResult(selected, { from: "auto", to: "zh" });
           responseText = response;
+        }
+
+        if (service === 'bing') {
+          console.log(`bing`);
+          response = await getBingResult(selected);
+          responseText = response && response.zh;
         }
       }
 

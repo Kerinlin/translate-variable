@@ -2,6 +2,7 @@ const config = {
     baiduBaseUrl: 'http://api.fanyi.baidu.com/api/trans/vip/translate?',
     youdaoBaseUrl: 'https://openapi.youdao.com/api',
     lingvaUrl: 'https://lingva.ml/api/v1',
+    bingUrl: 'https://cn.bing.com/dict/clientsearch',
     defaultFrom: 'en',
     defaultTo: 'zh-cn',
     systemConfig: {
@@ -13,7 +14,7 @@ const config = {
         IS_REPLACE: 'translateVariable.isReplace',
         IS_COPY: 'translateVariable.isCopy',
         RENAME_METHOD_NAME: 'translateVariable.renameMethodName',
-        SERVICE_LIST: ['baidu','lingva','youdao','google'],
+        SERVICE_LIST: ['baidu','lingva','youdao','google','bing'],
         TRANS_HOVER: 'translateVariable.isTransHover'
     },
 
