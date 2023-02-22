@@ -11,7 +11,7 @@ async function getLingvaResult(text = "", opt = {}) {
     try {
         const query = encodeURI(text);
         const url = `${config.lingvaUrl}/${from}/${to}/${query}`;
-        console.log(url);
+        // console.log(url);
         const res = await axios.get(url);
         console.log('lingva翻译结果', res.data.translation);
         const result = res.data && res.data.translation;

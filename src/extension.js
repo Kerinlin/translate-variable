@@ -62,7 +62,7 @@ function activate(context) {
     const youdaoID = config.get(YOUDAO_APPID);
     const youdaoKey = config.get(YOUDAO_KEY);
 
-    console.log('service in config', service);
+    // console.log('service in config', service);
 
     // 百度翻译检测
     if (service === 'baidu' && (!baiduAppid || !baiduKey)) {
