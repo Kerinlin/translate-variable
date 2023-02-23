@@ -51,7 +51,7 @@
       "properties": {
         "translateVariable.service": {
           "type": "string",
-          "default": "bing",
+          "default": "lingva",
           "enum": [
             "baidu",
             "youdao",
@@ -64,7 +64,7 @@
             "有道翻译需要配置应用ID与应用秘钥",
             "谷歌翻译无需配置，但是需要梯子",
             "lingva,免费开源",
-            "bing,没有字符限制,爬DOM获取结果"
+            "bing,没有字符限制,爬DOM获取结果,不稳定"
           ],
           "description": "选择翻译服务"
         },
@@ -81,12 +81,26 @@
         "translateVariable.youdaoID": {
           "type": "string",
           "default": "",
-          "description": "有道翻译应用ID"
+          "description": "有道翻译应用ID",
+          "if": {
+            "properties": {
+              "translateVariable.service": {
+                "const": "youdao"
+              }
+            }
+          }
         },
         "translateVariable.youdaoKey": {
           "type": "string",
           "default": "",
-          "description": "有道翻译应用秘钥"
+          "description": "有道翻译应用秘钥",
+          "if": {
+            "properties": {
+              "translateVariable.service": {
+                "const": "youdao"
+              }
+            }
+          }
         },
         "translateVariable.isCopy": {
           "type": "boolean",
@@ -140,6 +154,7 @@
     "@vitalets/google-translate-api": "^7.0.0",
     "axios": "^0.24.0",
     "cheerio": "^1.0.0-rc.12",
-    "md5": "^2.3.0"
+    "md5": "^2.3.0",
+    "openai": "^3.1.0"
   }
 }

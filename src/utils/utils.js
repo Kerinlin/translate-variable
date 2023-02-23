@@ -10,11 +10,12 @@ function convertName(str, type = 'none') {
 
 
     if (type === 'hump') {
-        const firstLetter = [strArray.shift()];
+        const [firstLetter] = [strArray.shift()];
         const newArray = strArray.map(item => {
             return `${item.substring(0, 1).toUpperCase()}${item.substring(1)}`;
         })
-        result = firstLetter.concat(newArray).join('');
+        
+        result = [firstLetter.toLowerCase()].concat(newArray).join('');
     }
 
     if (type === 'underline') {
