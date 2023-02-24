@@ -81,26 +81,12 @@
         "translateVariable.youdaoID": {
           "type": "string",
           "default": "",
-          "description": "有道翻译应用ID",
-          "if": {
-            "properties": {
-              "translateVariable.service": {
-                "const": "youdao"
-              }
-            }
-          }
+          "description": "有道翻译应用ID"
         },
         "translateVariable.youdaoKey": {
           "type": "string",
           "default": "",
-          "description": "有道翻译应用秘钥",
-          "if": {
-            "properties": {
-              "translateVariable.service": {
-                "const": "youdao"
-              }
-            }
-          }
+          "description": "有道翻译应用秘钥"
         },
         "translateVariable.isCopy": {
           "type": "boolean",

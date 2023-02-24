@@ -22,4 +22,4 @@ async function translate(text) {
   console.log(convertName(formatText, 'hump').length);
   // console.log(response.data.choices[0].text);
 }
-translate('测试机器人');
+translate('测试');
