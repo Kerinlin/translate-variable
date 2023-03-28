@@ -14,8 +14,9 @@ const config = {
         IS_REPLACE: 'translateVariable.isReplace',
         IS_COPY: 'translateVariable.isCopy',
         RENAME_METHOD_NAME: 'translateVariable.renameMethodName',
-        SERVICE_LIST: ['baidu','lingva','youdao','google','bing'],
-        TRANS_HOVER: 'translateVariable.isTransHover'
+        SERVICE_LIST: ['baidu','lingva','youdao','google','bing','openai'],
+        TRANS_HOVER: 'translateVariable.isTransHover',
+        OPENAI_TOKEN: 'translateVariable.openaiToken'
     },
 
 }

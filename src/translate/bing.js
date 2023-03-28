@@ -24,6 +24,7 @@ async function getBingTransResult(text) {
     if (resultEnDom) {
       result.en = resultEnDom.text();
     }
+    console.log('bing翻译结果',result);
     return result;
   } catch (error) {
     console.log(error);
