@@ -4,7 +4,7 @@
   "description": "Translate variable between en and zh-CN",
   "author": "kerinlin",
   "publisher": "kerinlin",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "icon": "src/assets/logo.png",
   "engines": {
     "vscode": "^1.63.0"
@@ -57,16 +57,23 @@
             "youdao",
             "google",
             "lingva",
-            "bing"
+            "bing",
+            "gpt"
           ],
           "enumDescriptions": [
             "百度翻译需要配置appid和key",
             "有道翻译需要配置应用ID与应用秘钥",
             "谷歌翻译无需配置，但是需要梯子",
             "lingva,免费开源",
-            "bing,没有字符限制,爬DOM获取结果,不稳定"
+            "bing,没有字符限制,爬DOM获取结果,不稳定",
+            "使用AI帮忙命名与翻译,需要配置TOKEN"
           ],
           "description": "选择翻译服务"
+        },
+        "translateVariable.openaiToken": {
+          "type": "string",
+          "default": "",
+          "description": "openai API keys"
         },
         "translateVariable.baiduAppid": {
           "type": "string",
@@ -141,6 +148,6 @@
     "axios": "^0.24.0",
     "cheerio": "^1.0.0-rc.12",
     "md5": "^2.3.0",
-    "openai": "^3.1.0"
+    "openai": "^3.2.1"
   }
 }

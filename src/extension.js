@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const { showQuickPick, onDidChangeTextEditorSelection, showInformationMessage, showWarningMessage, activeTextEditor, onDidChangeActiveTextEditor } = vscode.window;
 const { registerCommand } = vscode.commands;
-const { systemConfig: { SERVICE, BAIDU_APPID, BAIDU_KEY, SERVICE_LIST, IS_COPY, IS_REPLACE, RENAME_METHOD_NAME, YOUDAO_APPID, YOUDAO_KEY, TRANS_HOVER } } = require('./config/index.js');
+const { systemConfig: { SERVICE, BAIDU_APPID, BAIDU_KEY, SERVICE_LIST, IS_COPY, IS_REPLACE, RENAME_METHOD_NAME, YOUDAO_APPID, YOUDAO_KEY, TRANS_HOVER, OPENAI_TOKEN } } = require('./config/index.js');
 const { convertName } = require('./utils/utils.js');
 const { getConfiguration, onDidChangeConfiguration } = vscode.workspace;
 
@@ -10,6 +10,7 @@ const getYoudaoTransResult = require('./translate/youdao.js');
 const getGoogleTransResult = require('./translate/google.js');
 const getLingvaResult = require('./translate/lingva');
 const getBingResult = require('./translate/bing');
+const getAiTranslate = require('./translate/gpt');
 
 function activate(context) {
   let config = getConfiguration();
@@ -61,6 +62,7 @@ function activate(context) {
     const baiduKey = config.get(BAIDU_KEY);
     const youdaoID = config.get(YOUDAO_APPID);
     const youdaoKey = config.get(YOUDAO_KEY);
+    const gptKey = config.get(OPENAI_TOKEN);
 
     // console.log('service in config', service);
 
@@ -72,6 +74,11 @@ function activate(context) {
     // 有道翻译检测
     if (service === 'youdao' && (!youdaoID || !youdaoKey)) {
       showWarningMessage(`请检查有道翻译应用ID或者应用密钥是否设置正确`)
+    }
+
+    // gpt翻译检测
+    if (service === 'openai' && !gptKey) {
+      showWarningMessage(`请检查是否设置了API keys`)
     }
 
     // 处理翻译结果
@@ -113,6 +120,13 @@ function activate(context) {
         responseText = response && response.en;
       }
 
+      // gpt翻译
+      if (service === 'gpt') {
+        console.log(`gpt`);
+        response = await getAiTranslate('translate', _text, gptKey);
+        responseText = response;
+      }
+
       let result = responseText.toLowerCase().trim();
 
       // 变量命名方式
@@ -151,6 +165,8 @@ function activate(context) {
       const baiduKey = config.get(BAIDU_KEY);
       const youdaoID = config.get(YOUDAO_APPID);
       const youdaoKey = config.get(YOUDAO_KEY);
+      const gptKey = config.get(OPENAI_TOKEN);
+      console.log(gptKey);
 
       let response;
       let responseText = '';
@@ -184,6 +200,13 @@ function activate(context) {
           console.log(`bing`);
           response = await getBingResult(selected);
           responseText = response && response.zh;
+        }
+
+        // gpt翻译
+        if (service === 'gpt') {
+          console.log(`gpt`);
+          response = await getAiTranslate('hover', selected, gptKey);
+          responseText = response;
         }
       }
 
